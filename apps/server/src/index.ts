@@ -7,6 +7,7 @@ import apiRouter from "./routes";
 
 const app = express();
 
+app.use(express.json());
 app.use(
   cors({
     origin: env.CORS_ORIGIN,
@@ -16,16 +17,10 @@ app.use(
   }),
 );
 
-app.use(apiRouter)
+app.use(apiRouter);
 
 app.all("/api/auth{/*path}", toNodeHandler(auth));
 
-app.use(express.json());
-
-app.get("/", (_req, res) => {
-  
-});
-
-app.listen(3000, () => {
-  console.log("Server started running on PORT:3000");
+app.listen(env.PORT, () => {
+  console.log(`Server started running on PORT:${env.PORT}`);
 });

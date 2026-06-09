@@ -11,8 +11,8 @@ datasource db {
 
 model Url {
   id          String   @id @default(cuid())
-  num         Int      @unique @default(autoincrement())
-  userId      String   @unique
+  num         Int      @unique @default(autoincrement()) // used to generate random shortUrlId string
+  userId      String
   originalUrl String
   shortUrlId  String?  @unique
   createdAt   DateTime @default(now())

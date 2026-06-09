@@ -16,7 +16,6 @@ urlRouter.get("/:shortUrl", async (req, res) => {
   let shortUrlString: string | undefined = req.params.shortUrl;
   shortUrlString = shortUrlString.trim();
   if (!shortUrlString) {
-    console.log("Invalid url");
     return res.json({
       status: 404,
       message: "Invalid url",
@@ -46,6 +45,9 @@ urlRouter.get("/:shortUrl", async (req, res) => {
     });
   }
 
+  // update cache
+  redisClient.set(shortUrlString, url)
+
   // TODO: push to analytics queue
 
   res.redirect(url);
@@ -63,7 +65,6 @@ urlRouter.post("/", async (req, res) => {
     });
   }
 
-  console.log(req.body)
   let originalUrl: string | undefined = req.body.originalUrl;
 
   if (!originalUrl) {
@@ -103,6 +104,10 @@ urlRouter.post("/", async (req, res) => {
   res.json({
     status: 201,
     message: "Successfully created short url",
+    data: {
+      shortUrlId: createdUrl.shortUrlId,
+      originalUrl: originalUrl
+    }
   });
 });
 
