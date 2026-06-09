@@ -3,6 +3,7 @@ import { env } from "@url-shortner/env/server";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
+import apiRouter from "./routes";
 
 const app = express();
 
@@ -15,14 +16,16 @@ app.use(
   }),
 );
 
+app.use(apiRouter)
+
 app.all("/api/auth{/*path}", toNodeHandler(auth));
 
 app.use(express.json());
 
 app.get("/", (_req, res) => {
-  res.status(200).send("OK");
+  
 });
 
 app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
+  console.log("Server started running on PORT:3000");
 });
