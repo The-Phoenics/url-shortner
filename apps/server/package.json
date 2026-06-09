@@ -11,13 +11,14 @@
   },
   "dependencies": {
     "@url-shortner/auth": "workspace:*",
+    "@url-shortner/cache": "workspace:*",
     "@url-shortner/db": "workspace:*",
     "@url-shortner/env": "workspace:*",
-    "@url-shortner/cache": "workspace:*",
     "better-auth": "catalog:",
     "cors": "^2.8.5",
     "dotenv": "catalog:",
     "express": "^5.1.0",
+    "sqids": "^0.3.0",
     "zod": "catalog:"
   },
   "devDependencies": {
