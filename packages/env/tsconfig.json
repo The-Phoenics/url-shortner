@@ -1,0 +1,3 @@
+{
+  "extends": "@url-shortner/config/tsconfig.base.json"
+}
