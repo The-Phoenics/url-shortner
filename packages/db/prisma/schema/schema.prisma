@@ -10,33 +10,21 @@ datasource db {
 }
 
 model Url {
-  id          String   @id @default(cuid())
-  num         Int      @unique @default(autoincrement()) // used to generate random shortUrlId string
+  id          String    @id @default(cuid())
+  num         Int       @unique @default(autoincrement()) // used to generate random shortUrlId string
   userId      String
   originalUrl String
-  shortUrlId  String?  @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  analyticsId String   @unique
+  shortUrlId  String?   @unique
+  visitors    Visitor[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-  analytics Analytics @relation(fields: [analyticsId], references: [id])
-  user      User      @relation(fields: [userId], references: [id])
-}
-
-model Analytics {
-  id         String    @id @default(cuid())
-  visitCount Int
-  visitorId  String    @unique
-  visitors   Visitor[]
-  url        Url?
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Visitor {
   id        String @id @default(cuid())
   ipAddress String
-
-  // can add more data we need later
-
-  analyticsId String    @unique
-  analytics   Analytics @relation(fields: [analyticsId], references: [id])
+  urlId     String @unique
+  url       Url    @relation(fields: [urlId], references: [id])
 }
