@@ -17,6 +17,26 @@ model Url {
   shortUrlId  String?  @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  analyticsId String   @unique
 
-  user User @relation(fields: [userId], references: [id])
+  analytics Analytics @relation(fields: [analyticsId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+model Analytics {
+  id         String    @id @default(cuid())
+  visitCount Int
+  visitorId  String    @unique
+  visitors   Visitor[]
+  url        Url?
+}
+
+model Visitor {
+  id        String @id @default(cuid())
+  ipAddress String
+
+  // can add more data we need later
+
+  analyticsId String    @unique
+  analytics   Analytics @relation(fields: [analyticsId], references: [id])
 }
