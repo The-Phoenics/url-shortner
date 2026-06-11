@@ -1,0 +1,7 @@
+{
+  "name": "@url-shortner/shared",
+  "exports": {
+    "./constants": "./constants.ts",
+    "./types": "./types.ts"
+  }
+}

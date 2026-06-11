@@ -1,0 +1,14 @@
+{
+  "name": "@url-shortner/queue",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@url-shortner/shared": "workspace:*",
+    "bullmq": "catalog:"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:"
+  }
+}

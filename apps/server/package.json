@@ -14,6 +14,7 @@
     "@url-shortner/cache": "workspace:*",
     "@url-shortner/db": "workspace:*",
     "@url-shortner/env": "workspace:*",
+    "@url-shortner/queue": "workspace:*",
     "better-auth": "catalog:",
     "cors": "^2.8.5",
     "dotenv": "catalog:",

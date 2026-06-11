@@ -17,10 +17,15 @@ app.use(
   }),
 );
 
-app.use(apiRouter);
+app.use("/api", apiRouter);
 
+/*
+  /api/auth/sign-up/email
+  /api/auth/sign-in/email
+  /api/auth/signout
+*/
 app.all("/api/auth{/*path}", toNodeHandler(auth));
 
 app.listen(env.PORT, () => {
-  console.log(`Server started running on PORT:${env.PORT}`);
+  console.log(`Server: Server started on port ${env.PORT}`);
 });

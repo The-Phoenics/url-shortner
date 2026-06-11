@@ -1,0 +1,13 @@
+{
+  "name": "worker",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "bullmq": "catalog:",
+    "@url-shortner/queue": "workspace:*",
+    "@url-shortner/shared": "workspace:*"
+  }
+}

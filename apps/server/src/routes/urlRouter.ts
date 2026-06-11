@@ -4,6 +4,8 @@ import redisClient from "@url-shortner/cache";
 import { auth } from "@url-shortner/auth";
 import { fromNodeHeaders } from "better-auth/node";
 import Sqids from "sqids";
+import analyticsQueue from "@url-shortner/queue";
+import addAnalyticsJob from "@url-shortner/queue";
 
 function generateShortUrlString(length: number, id: number) {
   const squids = new Sqids({ minLength: length });
@@ -26,6 +28,9 @@ urlRouter.get("/:shortUrl", async (req, res) => {
 
   // check cache
   url = await redisClient.get(shortUrlString);
+  if (url) {
+    console.log("CACHE HIT");
+  }
 
   // check db if not found in cache
   if (!url) {
@@ -46,10 +51,11 @@ urlRouter.get("/:shortUrl", async (req, res) => {
   }
 
   // update cache
-  redisClient.set(shortUrlString, url)
+  redisClient.set(shortUrlString, url);
 
-  // TODO: push to analytics queue
-
+  // add url visit job to analytics queue
+  await addAnalyticsJob({ shortUrlString: shortUrlString });
+  
   res.redirect(url);
 });
 
@@ -106,8 +112,8 @@ urlRouter.post("/", async (req, res) => {
     message: "Successfully created short url",
     data: {
       shortUrlId: createdUrl.shortUrlId,
-      originalUrl: originalUrl
-    }
+      originalUrl: originalUrl,
+    },
   });
 });
 
