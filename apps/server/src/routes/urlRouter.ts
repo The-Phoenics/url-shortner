@@ -6,6 +6,7 @@ import { fromNodeHeaders } from "better-auth/node";
 import Sqids from "sqids";
 import addAnalyticsJob from "@url-shortner/queue";
 import type { AnalyticsJobDataType } from "@url-shortner/shared/types";
+import { apiJsonRseponse } from "../utils";
 
 function generateShortUrlString(length: number, id: number) {
   const squids = new Sqids({ minLength: length });
@@ -18,10 +19,9 @@ urlRouter.get("/:shortUrl", async (req, res) => {
   let shortUrlString: string | undefined = req.params.shortUrl;
   shortUrlString = shortUrlString.trim();
   if (!shortUrlString) {
-    return res.json({
-      status: 404,
-      message: "Invalid url",
-    });
+    return res
+      .status(404)
+      .json(apiJsonRseponse(false, null, "Invalid url"));
   }
 
   let url: string | null = null;
@@ -44,10 +44,9 @@ urlRouter.get("/:shortUrl", async (req, res) => {
   }
 
   if (!url) {
-    return res.json({
-      status: 404,
-      message: "Invalid url",
-    });
+    return res
+      .status(404)
+      .json(apiJsonRseponse(false, null, "Invalid url"));
   }
 
   // update cache
@@ -69,19 +68,17 @@ urlRouter.post("/", async (req, res) => {
   });
   const user = session?.user;
   if (!session || !user) {
-    return res.json({
-      status: 401,
-      message: "Unauthorized user session",
-    });
+    return res
+      .status(401)
+      .json(apiJsonRseponse(false, null, "Unauthorized user session"));
   }
 
   let originalUrl: string | undefined = req.body.originalUrl;
 
   if (!originalUrl) {
-    return res.json({
-      status: 400,
-      message: "Invalid redirect url provided",
-    });
+    return res
+      .status(400)
+      .json(apiJsonRseponse(false, null, "Invalid redirect url provided"));
   }
   originalUrl = originalUrl.trim();
 
@@ -105,20 +102,21 @@ urlRouter.post("/", async (req, res) => {
   });
 
   if (!createdUrl) {
-    return res.json({
-      status: 500,
-      message: "Failed to create short url",
-    });
+    return res
+      .status(500)
+      .json(apiJsonRseponse(false, null, "Failed to create short url"));
   }
 
-  res.json({
-    status: 201,
-    message: "Successfully created short url",
-    data: {
-      shortUrlId: createdUrl.shortUrlId,
-      originalUrl: originalUrl,
-    },
-  });
+  res.status(201).json(
+    apiJsonRseponse(
+      true,
+      {
+        shortUrlId: createdUrl.shortUrlId,
+        originalUrl: originalUrl,
+      },
+      "Successfully created short url",
+    ),
+  );
 });
 
 export default urlRouter;
