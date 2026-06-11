@@ -30,6 +30,7 @@
     "check-types": "turbo check-types",
     "dev:web": "turbo -F web dev",
     "dev:server": "turbo -F server dev",
+    "dev:worker": "turbo -F worker dev",
     "db:push": "turbo -F @url-shortner/db db:push",
     "db:studio": "turbo -F @url-shortner/db db:studio",
     "db:generate": "turbo -F @url-shortner/db db:generate",
