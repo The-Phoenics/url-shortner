@@ -36,6 +36,7 @@
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.1",
         "@url-shortner/config": "workspace:*",
+        "@url-shortner/shared": "workspace:*",
         "tsdown": "^0.21.9",
         "typescript": "catalog:",
       },
@@ -71,6 +72,7 @@
     "apps/worker": {
       "name": "worker",
       "dependencies": {
+        "@url-shortner/db": "workspace:*",
         "@url-shortner/queue": "workspace:*",
         "@url-shortner/shared": "workspace:*",
         "bullmq": "catalog:",
@@ -147,6 +149,9 @@
     },
     "packages/shared": {
       "name": "@url-shortner/shared",
+      "dependencies": {
+        "@url-shortner/db": "workspace:*",
+      },
     },
     "packages/ui": {
       "name": "@url-shortner/ui",

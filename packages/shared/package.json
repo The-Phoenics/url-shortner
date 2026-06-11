@@ -3,5 +3,8 @@
   "exports": {
     "./constants": "./constants.ts",
     "./types": "./types.ts"
+  },
+  "dependencies": {
+    "@url-shortner/db": "workspace:*"
   }
 }

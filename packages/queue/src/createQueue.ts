@@ -10,7 +10,7 @@ const bullMqConnection: ConnectionOptions = {
   maxRetriesPerRequest: null,
 };
 
-async function createQueue<T>(queueType: QUEUE_TYPE) {
+async function createQueue<T>(queueType: QUEUE_TYPE): Promise<Queue> {
   const queue = new Queue<T>(queueType, {
     connection: bullMqConnection,
   });

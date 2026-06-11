@@ -4,8 +4,8 @@ import redisClient from "@url-shortner/cache";
 import { auth } from "@url-shortner/auth";
 import { fromNodeHeaders } from "better-auth/node";
 import Sqids from "sqids";
-import analyticsQueue from "@url-shortner/queue";
 import addAnalyticsJob from "@url-shortner/queue";
+import type { AnalyticsJobDataType } from "@url-shortner/shared/types";
 
 function generateShortUrlString(length: number, id: number) {
   const squids = new Sqids({ minLength: length });
@@ -54,8 +54,12 @@ urlRouter.get("/:shortUrl", async (req, res) => {
   redisClient.set(shortUrlString, url);
 
   // add url visit job to analytics queue
-  await addAnalyticsJob({ shortUrlString: shortUrlString });
-  
+  const jobData: AnalyticsJobDataType = {
+    shortUrlId: shortUrlString,
+    ipAddress: req.ip ?? "",
+  };
+  await addAnalyticsJob(jobData);
+
   res.redirect(url);
 });
 

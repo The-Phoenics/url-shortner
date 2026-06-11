@@ -1,19 +1,18 @@
-import { QUEUE_TYPE } from "@url-shortner/shared/types";
+import {
+  QUEUE_TYPE,
+  type AnalyticsJobDataType,
+} from "@url-shortner/shared/types";
 import createQueue from "./createQueue";
 
-interface AnalyticsJobData {
-  shortUrlString: string;
-}
-
-const analyticsQueue = await createQueue<AnalyticsJobData>(
+const analyticsQueue = await createQueue<AnalyticsJobDataType>(
   QUEUE_TYPE.ANALYTICS_QUEUE,
 );
 
-async function addAnalyticsJob(jobData: AnalyticsJobData) {
+async function addAnalyticsJob(jobData: AnalyticsJobDataType) {
   let job;
   try {
     job = await analyticsQueue.add("analytics", jobData);
-    console.log("Queue:info JOB ADDED")
+    console.log("Queue:info JOB ADDED");
   } catch (err) {
     console.log("Queue add job error:", err);
   }

@@ -8,6 +8,7 @@
   "dependencies": {
     "bullmq": "catalog:",
     "@url-shortner/queue": "workspace:*",
-    "@url-shortner/shared": "workspace:*"
+    "@url-shortner/shared": "workspace:*",
+    "@url-shortner/db": "workspace:*"
   }
 }
