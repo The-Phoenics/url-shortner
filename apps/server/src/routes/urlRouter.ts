@@ -19,9 +19,7 @@ urlRouter.get("/:shortUrl", async (req, res) => {
   let shortUrlString: string | undefined = req.params.shortUrl;
   shortUrlString = shortUrlString.trim();
   if (!shortUrlString) {
-    return res
-      .status(404)
-      .json(apiJsonRseponse(false, null, "Invalid url"));
+    return res.status(404).json(apiJsonRseponse(false, null, "Invalid url"));
   }
 
   let url: string | null = null;
@@ -44,9 +42,7 @@ urlRouter.get("/:shortUrl", async (req, res) => {
   }
 
   if (!url) {
-    return res
-      .status(404)
-      .json(apiJsonRseponse(false, null, "Invalid url"));
+    return res.status(404).json(apiJsonRseponse(false, null, "Invalid url"));
   }
 
   // update cache
@@ -63,11 +59,8 @@ urlRouter.get("/:shortUrl", async (req, res) => {
 });
 
 urlRouter.post("/", async (req, res) => {
-  const session = await auth.api.getSession({
-    headers: fromNodeHeaders(req.headers),
-  });
-  const user = session?.user;
-  if (!session || !user) {
+  const user = req.user;
+  if (!user) {
     return res
       .status(401)
       .json(apiJsonRseponse(false, null, "Unauthorized user session"));

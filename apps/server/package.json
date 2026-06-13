@@ -10,6 +10,7 @@
     "start": "bun run dist/index.mjs"
   },
   "dependencies": {
+    "@types/rate-limit-redis": "^3.0.0",
     "@url-shortner/auth": "workspace:*",
     "@url-shortner/cache": "workspace:*",
     "@url-shortner/db": "workspace:*",
@@ -19,6 +20,8 @@
     "cors": "^2.8.5",
     "dotenv": "catalog:",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.5.2",
+    "rate-limit-redis": "^5.0.0",
     "sqids": "^0.3.0",
     "zod": "catalog:"
   },
@@ -26,6 +29,7 @@
     "@types/bun": "catalog:",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
+    "@types/express-rate-limit": "^6.0.2",
     "@url-shortner/config": "workspace:*",
     "@url-shortner/shared": "workspace:*",
     "tsdown": "^0.21.9",
